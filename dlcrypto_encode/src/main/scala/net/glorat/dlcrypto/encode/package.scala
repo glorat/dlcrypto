@@ -7,8 +7,9 @@ import com.trueaccord.scalapb.TypeMapper
 import net.glorat.dlcrypto.core.{Address, Hash}
 
 package object encode {
-
-  implicit val hashMapper : TypeMapper[Seq[Byte],Hash] = TypeMapper(Hash.apply)(_.getBytes)
+  private val btohash :(ByteString=>Hash) = x => Hash(x.toByteArray)
+  private val hashtob : (Hash =>ByteString) = x => ByteString.copyFrom(x.toArray)
+  implicit val hashMapper : TypeMapper[ByteString,Hash] = TypeMapper(btohash)(hashtob)
   implicit val uuidMapper: TypeMapper[ByteString, java.util.UUID] = TypeMapper(Util.bytesToUuid)(Util.uuidToBytes)
   implicit val bytesMapper: TypeMapper[ByteString,Seq[Byte]] = TypeMapper(Util.scalaToGoogleBytes)(Util.googleToScalaBytes)
   implicit val addressMapper: TypeMapper[String, Address] = TypeMapper(Address.apply)(_.value)
