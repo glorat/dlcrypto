@@ -7,7 +7,7 @@ import org.scalatest.FlatSpec
 
 //Let's keep code short so...
 //noinspection NameBooleanParameters
-class HashSafeTests extends FlatSpec with Logging {
+class HashSafeTests extends FlatSpec {
   import net.glorat.dlcrypto.encode.HashSafeValidator._
 
   case class StringTuple(s1:String, s2:String)
