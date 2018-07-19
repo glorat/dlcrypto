@@ -1,6 +1,8 @@
 package net.glorat.dlcrypto
 
 import java.nio.ByteBuffer
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 
 import com.google.protobuf.ByteString
 import com.trueaccord.scalapb.TypeMapper
@@ -9,6 +11,12 @@ import net.glorat.dlcrypto.core.{Address, Hash}
 package object encode {
   private val btohash :(ByteString=>Hash) = x => Hash(x.toByteArray)
   private val hashtob : (Hash =>ByteString) = x => ByteString.copyFrom(x.toArray)
+  val isoDateToDate: (String=>LocalDate) = x => LocalDate.parse(x, DateTimeFormatter.ISO_LOCAL_DATE)
+  val dateToIsoDate: (LocalDate=>String) = x => x.format(DateTimeFormatter.ISO_LOCAL_DATE)
+
+  implicit val localDateMapper: TypeMapper[String, java.time.LocalDate]
+  = TypeMapper(isoDateToDate)(dateToIsoDate)
+
   implicit val hashMapper : TypeMapper[ByteString,Hash] = TypeMapper(btohash)(hashtob)
   implicit val uuidMapper: TypeMapper[ByteString, java.util.UUID] = TypeMapper(Util.bytesToUuid)(Util.uuidToBytes)
   implicit val bytesMapper: TypeMapper[ByteString,Seq[Byte]] = TypeMapper(Util.scalaToGoogleBytes)(Util.googleToScalaBytes)

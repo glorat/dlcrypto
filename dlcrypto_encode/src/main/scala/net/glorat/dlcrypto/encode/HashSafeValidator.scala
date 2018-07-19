@@ -1,5 +1,9 @@
 package net.glorat.dlcrypto.encode
 
+import java.time.LocalDate
+
+import com.trueaccord.scalapb.GeneratedMessage
+
 /**
   * Created by kevin on 21/4/2018.
   */
@@ -8,6 +12,17 @@ object HashSafeValidator {
 
     p1 match {
       case product: Product if p2.isInstanceOf[Product] => valueEquals(product, p2.asInstanceOf[Product])
+      case dt: LocalDate => {
+        // LocalDate and string equivalence
+        valueEquals(dateToIsoDate(dt), p2)
+      }
+      case s1:String => {
+        p2 match {
+          case s2:String => s1 == s2
+          case dt2:LocalDate => valueEquals(p1, dateToIsoDate(dt2))
+          case _ => false
+        }
+      }
       case _ =>
         // Aside from products, must be same type and be immutable and equal
         // Hard to check all of that so go for simple equals
@@ -62,6 +77,19 @@ object HashSafeValidator {
     val p1 = o1.asInstanceOf[Product]
     val p1encode = Proto2Serializer.forSign(p1)
     require(p1encode.length == Proto2Serializer.lengthOf(p1), "Proto2 should encode to expected length")
+  }
+
+  /**
+    * A stronger test for proto2 generated classes from scalapb that
+    * the serialization used for hashing is the same as message passing
+    * @param o1 object to check
+    */
+  def validateMore(o1:GeneratedMessage) : Unit = {
+    if (!o1.isInstanceOf[Product]) throw new IllegalArgumentException("o1 must be a case class")
+    val pbbytes : Seq[Byte] = o1.toByteArray.toSeq
+    val mybytes : Seq[Byte] = Proto2Serializer.forSign(o1.asInstanceOf[Product])
+    require(pbbytes == mybytes,
+      "dlcrypto serialization should match proto2 spec. This may fail if you are using types not supported by dlcrypto - for example, the types may not be safe")
   }
 
   private def validate(p1:Product, p2:Product) : Unit = {

@@ -38,7 +38,14 @@ of two objects will only be the same if the objects themselves are the "same"
 
 **When are two objects the "same"?**
 
-If the two objects equal BUT ignoring any class names
+If the two objects equal BUT ignoring any class names. Equality is the usual equivalence
+by type and value
+
+There is a special case that fields of type java.time.LocalDate are treated
+as equivalent to their ISO 8601 date string. This is convenience in
+that cross-platform dates can only reasonably be transported by Strings
+as opposed to any binary encoding but we want to retain the type safety
+on the JVM side with the best available date class.
 
 **Why ignore class names?**
 
@@ -74,6 +81,7 @@ if desired and be reasonably assured of compatibility.
 To ensure that the encoding is "safe", only a subset of types can be safely encoded.
 Objects must be
 - Value objects/DTOs, as a general design principle 
+- java.time.LocalDate (encoded as ISO 8601 date string)
 - Immutable (recursively)
 - Case classes containing
   - Scalars

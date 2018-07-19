@@ -1,6 +1,7 @@
 package net.glorat.dlcrypto.encode
 
 import java.nio.ByteBuffer
+import java.time.LocalDate
 
 import net.glorat.dlcrypto.core.{Address, CryptoSerializer, Hash}
 import com.google.protobuf.{ByteString, CodedOutputStream}
@@ -50,6 +51,7 @@ object Proto2Serializer extends CryptoSerializer {
         case x: Int => /*if (x!=0)*/  computeInt32Size(tag, x) //else 0
         case x: Hash => computeBytesSize(tag, ByteString.copyFrom(x.getBytes.toArray))
         case x: java.util.UUID => computeBytesSize(tag, uuidToBytes(x))
+        case x: LocalDate => computeStringSize(tag, dateToIsoDate(x))
         case x: String => computeStringSize(tag, x)
         case x: Address => computeStringSize(tag, x.value)
         case x: Seq[_] if x.isEmpty => 0
@@ -73,6 +75,8 @@ object Proto2Serializer extends CryptoSerializer {
           os.writeByteArray(tag, x.getBytes.toArray)
         case x: java.util.UUID =>
           os.writeBytes(tag, uuidToBytes(x))
+        case x: LocalDate =>
+          os.writeString(tag, dateToIsoDate(x))
         case x: String =>
           // proto3
           //if (x != "") {
