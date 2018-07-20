@@ -2,7 +2,6 @@ package net.glorat.dlcrypto.ecdsa
 
 import javax.crypto.Cipher
 
-import net.glorat.dlcrypto.ecdsa
 import net.glorat.dlcrypto.core._
 import net.glorat.dlcrypto.encode.Proto2Serializer
 import org.bouncycastle.util.encoders.Hex
@@ -222,4 +221,8 @@ class TestSigner extends FlatSpec with Logging {
   }
   */
 
+}
+
+trait Logging {
+  lazy val log = org.slf4j.LoggerFactory.getLogger(this.getClass)
 }

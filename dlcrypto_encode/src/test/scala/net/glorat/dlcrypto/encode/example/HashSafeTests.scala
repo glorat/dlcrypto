@@ -1,5 +1,7 @@
 package net.glorat.dlcrypto.encode.example
 
+import java.time.LocalDate
+
 import net.glorat.dlcrypto.core.Logging
 import net.glorat.dlcrypto.encode.Proto2Serializer
 import org.scalatest.FlatSpec
@@ -7,13 +9,14 @@ import org.scalatest.FlatSpec
 
 //Let's keep code short so...
 //noinspection NameBooleanParameters
-class HashSafeTests extends FlatSpec with Logging {
+class HashSafeTests extends FlatSpec {
   import net.glorat.dlcrypto.encode.HashSafeValidator._
 
   case class StringTuple(s1:String, s2:String)
   case class StringTupleAgain(s1:String, s2:String)
   case class StringTriple(s1:String, s2:String, s3:String)
   case class IntTuple(i1:Int, i2:Int)
+  case class StringAndDate(s1:String, d2:LocalDate)
 
   "Basic value object" should "pass the rules" in {
     validate(StringTuple("abc", "abc"), StringTuple("abc","abc"), true)
@@ -66,5 +69,21 @@ class HashSafeTests extends FlatSpec with Logging {
     // Even try to create a new ref!
     val o2 = HasUuid(new java.util.UUID(o1.uuid.getMostSignificantBits, o1.uuid.getLeastSignificantBits))
     validate(o1, o2, true)
+  }
+
+  "LocalDate" should "follow rules" in {
+    val o1 = StringAndDate("date", LocalDate.of(2018,1,1))
+    val o2 = StringAndDate("date", LocalDate.of(2018,1,1))
+    val no1 = StringAndDate("date", LocalDate.of(2018,1,2))
+    validate (o1, o2, true)
+    validate (o1, no1, false)
+  }
+
+  it should "be comparable to a string" in {
+    val d1 = StringAndDate("date", LocalDate.of(2018,1,1))
+    val o1 = StringTuple("date","2018-01-01")
+    // Special equivalance of LocalDate and ISO string
+    require(valueEquals(d1, o1) == true)
+
   }
 }

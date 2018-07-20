@@ -6,7 +6,7 @@ import net.glorat.dlcrypto.ecdsa
 import net.glorat.dlcrypto.core._
 import org.scalatest._
 
-class TestBitcoin extends FlatSpec with Logging {
+class TestBitcoin extends FlatSpec {
   val message = "This is the message to be signed"
 
   implicit val signer : Signer = ECDSASigner
