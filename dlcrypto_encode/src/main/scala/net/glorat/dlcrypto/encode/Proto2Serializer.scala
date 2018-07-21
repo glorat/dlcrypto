@@ -54,7 +54,7 @@ object Proto2Serializer extends CryptoSerializer {
         case x: LocalDate => computeStringSize(tag, dateToIsoDate(x))
         case x: String => computeStringSize(tag, x)
         case x: Address => computeStringSize(tag, x.value)
-        case x: Seq[_] if x.isEmpty => 0
+        case x: Seq[_] if x.isEmpty => computeBytesSize(tag, ByteString.EMPTY) // Assume Seq[Byte] was type erasured
         case x: Seq[_] if x.head.isInstanceOf[Byte] => computeBytesSize(tag, ByteString.copyFrom(x.asInstanceOf[Seq[Byte]].toArray))
         case _: Seq[_] => throw new IllegalArgumentException("Only Seq[Byte] supported")
         case x: Product => 1 + computeUInt32SizeNoTag(lengthOf(x)) + lengthOf(x)
@@ -99,6 +99,10 @@ object Proto2Serializer extends CryptoSerializer {
           os.writeBytes(tag, ByteString.copyFrom(seq.asInstanceOf[Seq[Byte]].toArray))
         case _ => throw new IllegalArgumentException("Only serializing Seq[Byte]")
       }
+    }
+    else {
+      // Assume Seq[Byte] was type erasured
+      os.writeBytes(tag, ByteString.EMPTY)
     }
   }
 }

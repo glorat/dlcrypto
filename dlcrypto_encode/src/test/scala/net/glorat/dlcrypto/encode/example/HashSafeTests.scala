@@ -13,7 +13,6 @@ class HashSafeTests extends FlatSpec {
   import net.glorat.dlcrypto.encode.HashSafeValidator._
 
   case class StringTuple(s1:String, s2:String)
-  case class StringTupleAgain(s1:String, s2:String)
   case class StringTriple(s1:String, s2:String, s3:String)
   case class IntTuple(i1:Int, i2:Int)
   case class StringAndDate(s1:String, d2:LocalDate)
@@ -26,8 +25,12 @@ class HashSafeTests extends FlatSpec {
   }
 
   "Structurally equivalent value objects" should "equal" in {
-    validate(StringTuple("abc","abc"), StringTupleAgain("abc", "abc"), true)
-    validate(StringTuple("abc", "abc"), StringTupleAgain("123","123"), false)
+    validate(StringTuple("abc","abc"), StringTupleProto("abc", "abc"), true)
+    validate(StringTuple("abc", "abc"), StringTupleProto("123","123"), false)
+  }
+
+  it should "match proto2 serialization" in {
+    validateMore(StringTupleProto("123","123"))
   }
 
   "Structurally non-equivalent" should "not equal" in {
@@ -58,9 +61,18 @@ class HashSafeTests extends FlatSpec {
   }
 
   case class HasByteArray(b:Seq[Byte])
-  "Seq of Byte" should "validate" in {
+  "Seq of Byte" should "follow rules" in {
     val ba = HasByteArray(Seq(1,2,3))
-    validate(ba)
+    val ba2 = ByteArrayProto(Seq(1,2,3))
+    validate(ba, ba2, true)
+    validateMore(ba2)
+  }
+
+  "Empty Seq of Byte" should "follow rules" in {
+    val ba = HasByteArray(Seq())
+    val ba2 = ByteArrayProto(Seq())
+    validate(ba, ba2, true)
+    validateMore(ba2)
   }
 
   case class HasUuid(uuid:java.util.UUID)
@@ -71,12 +83,24 @@ class HashSafeTests extends FlatSpec {
     validate(o1, o2, true)
   }
 
+  it should "match proto2 serialization" in {
+    val o1 = UuidProto(java.util.UUID.randomUUID())
+    validateMore(o1)
+  }
+
   "LocalDate" should "follow rules" in {
     val o1 = StringAndDate("date", LocalDate.of(2018,1,1))
     val o2 = StringAndDate("date", LocalDate.of(2018,1,1))
+    val o3 = StringAndDateProto("date", LocalDate.of(2018,1,1))
     val no1 = StringAndDate("date", LocalDate.of(2018,1,2))
     validate (o1, o2, true)
+    validate (o1, o3, true)
     validate (o1, no1, false)
+  }
+
+  it should "match proto2 serialization" in {
+    val o1 = StringAndDateProto("date", LocalDate.of(2018,1,1))
+    validateMore(o1)
   }
 
   it should "be comparable to a string" in {

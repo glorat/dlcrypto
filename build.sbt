@@ -25,12 +25,13 @@ lazy val dlcrypto_core = project.settings(commonSettings, fork  := true)
 
 lazy val dlcrypto_ecdsa = project.settings(commonSettings ,fork  := true).dependsOn(dlcrypto_core % "compile->compile;test->test", dlcrypto_encode)
 
-lazy val dlcrypto_encode = project.settings(commonSettings)dependsOn(dlcrypto_core % "compile->compile;test->test")
+lazy val dlcrypto_encode = project.settings(commonSettings)dependsOn(dlcrypto_core % "compile->compile;test->test;protobuf->protobuf")
 
 lazy val dlcrypto_mock = project.settings(commonSettings).dependsOn(dlcrypto_core % "compile->compile;test->test", dlcrypto_encode)
 
 lazy val root = (project in file("."))
   .aggregate(dlcrypto_core, dlcrypto_ecdsa, dlcrypto_encode, dlcrypto_mock)
+  .settings(commonSettings)
 
 homepage := Some (url("https://github.com/glorat/dlcrypto"))
 
