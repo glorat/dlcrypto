@@ -1,0 +1,27 @@
+syntax = "proto2";
+
+import "scalapb/scalapb.proto";
+
+option (scalapb.options) = {
+  import: "net.glorat.dlcrypto.encode._"
+  package_name: "net.glorat.dlcrypto.encode.example"
+  flat_package: true
+};
+
+message StringTupleProto {
+    required string s1 = 1;
+    required string s2 = 2;
+}
+
+message UuidProto {
+    required bytes uuid = 1 [(scalapb.field).type = "java.util.UUID"];
+}
+
+message StringAndDateProto {
+    required string s1 = 1;
+    required string d2 = 2 [(scalapb.field).type = "java.time.LocalDate"];
+}
+
+message ByteArrayProto {
+    required bytes b = 1 [(scalapb.field).type = "Seq[Byte]"];
+}
