@@ -62,3 +62,4 @@ publishTo in ThisBuild := sonatypePublishTo.value
 // Useful to uncomment for snapshots or bad publishes
 //publishConfiguration in ThisBuild := publishConfiguration.value.withOverwrite(true)
 //publishLocalConfiguration in ThisBuild := publishLocalConfiguration.value.withOverwrite(true)
+
