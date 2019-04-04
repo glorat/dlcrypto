@@ -1,10 +1,14 @@
 name := "dlcrypto-root"
 
-version := "0.1"
-
 organization := "net.glorat"
 
-scalaVersion in GlobalScope := "2.11.7"
+lazy val scala212 = "2.12.8"
+lazy val scala211 = "2.11.12"
+lazy val supportedScalaVersions = List(scala212, scala211)
+
+ThisBuild / organization := "net.glorat"
+ThisBuild / version      := "0.2.0"
+ThisBuild / scalaVersion := scala212
 
 resolvers += Classpaths.typesafeReleases
 
@@ -13,12 +17,10 @@ resolvers += "Sonatype OSS Snapshots" at "https://oss.sonatype.org/content/repos
 updateOptions := updateOptions.value.withCachedResolution(true)
 
 lazy val commonSettings = Seq(
-  organization := "net.glorat",
-  version := "0.2.0-SNAPSHOT",
-  scalaVersion := "2.11.7",
   publishMavenStyle := true,
   pomIncludeRepository := { _ => false },
-  licenses := Seq("GNU LESSER GENERAL PUBLIC LICENSE" -> url("https://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt"))
+  licenses := Seq("GNU LESSER GENERAL PUBLIC LICENSE" -> url("https://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt")),
+  crossScalaVersions := supportedScalaVersions
 )
 
 lazy val dlcrypto_core = project.settings(commonSettings, fork  := true)
@@ -32,6 +34,10 @@ lazy val dlcrypto_mock = project.settings(commonSettings).dependsOn(dlcrypto_cor
 lazy val root = (project in file("."))
   .aggregate(dlcrypto_core, dlcrypto_ecdsa, dlcrypto_encode, dlcrypto_mock)
   .settings(commonSettings)
+    .settings(
+      crossScalaVersions := Nil,
+      publish / skip := true
+    )
 
 homepage := Some (url("https://github.com/glorat/dlcrypto"))
 
@@ -50,3 +56,9 @@ developers := List (
     url = url("https://github.com/glorat")
   )
 )
+
+publishTo in ThisBuild := sonatypePublishTo.value
+
+// Useful to uncomment for snapshots or bad publishes
+//publishConfiguration in ThisBuild := publishConfiguration.value.withOverwrite(true)
+//publishLocalConfiguration in ThisBuild := publishLocalConfiguration.value.withOverwrite(true)
