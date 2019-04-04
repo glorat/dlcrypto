@@ -12,10 +12,9 @@ libraryDependencies ++= Seq(
   "ch.qos.logback" % "logback-classic" % "1.0.7",
   "com.softwaremill.macwire" %% "macros" % "2.2.2" % "provided",
   "com.softwaremill.macwire" %% "util" % "2.2.2",
-  "com.trueaccord.scalapb" %% "compilerplugin" % "0.6.2",
-  "com.trueaccord.scalapb" %% "scalapb-runtime" % com.trueaccord.scalapb.compiler.Version.scalapbVersion,
-  "com.trueaccord.scalapb" %% "scalapb-runtime" % com.trueaccord.scalapb.compiler.Version.scalapbVersion % "protobuf",
-  "com.trueaccord.scalapb" %% "scalapb-json4s" % "0.3.2"
+  "com.thesamet.scalapb" %% "scalapb-runtime" % scalapb.compiler.Version.scalapbVersion,
+  "com.thesamet.scalapb" %% "scalapb-runtime" % scalapb.compiler.Version.scalapbVersion % "protobuf",
+  "com.thesamet.scalapb" %% "scalapb-json4s" % "0.7.2"
 )
 
 PB.targets in Compile := Seq(
