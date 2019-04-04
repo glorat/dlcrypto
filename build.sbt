@@ -39,16 +39,16 @@ lazy val root = (project in file("."))
       publish / skip := true
     )
 
-homepage := Some (url("https://github.com/glorat/dlcrypto"))
+ThisBuild / homepage := Some (url("https://github.com/glorat/dlcrypto"))
 
-scmInfo := Some (
+ThisBuild / scmInfo := Some (
   ScmInfo(
     url("https://github.com/glorat/dlcrypto"),
     "scm:git@github.com:glorat/dlcrypto.git"
   )
 )
 
-developers := List (
+ThisBuild / developers := List (
   Developer(
     id = "glorat",
     name = "Kevin Tam",
@@ -60,6 +60,6 @@ developers := List (
 publishTo in ThisBuild := sonatypePublishTo.value
 
 // Useful to uncomment for snapshots or bad publishes
-//publishConfiguration in ThisBuild := publishConfiguration.value.withOverwrite(true)
-//publishLocalConfiguration in ThisBuild := publishLocalConfiguration.value.withOverwrite(true)
+publishConfiguration in ThisBuild := publishConfiguration.value.withOverwrite(true)
+publishLocalConfiguration in ThisBuild := publishLocalConfiguration.value.withOverwrite(true)
 
