@@ -14,7 +14,7 @@ updateOptions := updateOptions.value.withCachedResolution(true)
 
 lazy val commonSettings = Seq(
   organization := "net.glorat",
-  version := "0.1.1-SNAPSHOT",
+  version := "0.2.0-SNAPSHOT",
   scalaVersion := "2.11.7",
   publishMavenStyle := true,
   pomIncludeRepository := { _ => false },
