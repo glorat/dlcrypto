@@ -7,7 +7,7 @@ lazy val scala211 = "2.11.12"
 lazy val supportedScalaVersions = List(scala212, scala211)
 
 ThisBuild / organization := "net.glorat"
-ThisBuild / version      := "0.2.0"
+ThisBuild / version      := "0.2.1"
 ThisBuild / scalaVersion := scala212
 
 resolvers += Classpaths.typesafeReleases
@@ -63,5 +63,3 @@ publishTo in ThisBuild := sonatypePublishTo.value
 // Useful to uncomment for snapshots or bad publishes
 publishConfiguration in ThisBuild := publishConfiguration.value.withOverwrite(true)
 publishLocalConfiguration in ThisBuild := publishLocalConfiguration.value.withOverwrite(true)
-
->>>>>>> github/master
