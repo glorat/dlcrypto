@@ -4,9 +4,9 @@ import java.io.ByteArrayOutputStream
 
 import net.glorat.dlcrypto.ecdsa
 import net.glorat.dlcrypto.core._
-import org.scalatest._
+import org.scalatest.flatspec.AnyFlatSpec
 
-class TestBitcoin extends FlatSpec {
+class TestBitcoin extends AnyFlatSpec {
   val message = "This is the message to be signed"
 
   implicit val signer : Signer = ECDSASigner

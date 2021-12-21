@@ -4,12 +4,11 @@ import java.time.LocalDate
 
 import net.glorat.dlcrypto.core.Logging
 import net.glorat.dlcrypto.encode.Proto2Serializer
-import org.scalatest.FlatSpec
-
+import org.scalatest.flatspec.AnyFlatSpec
 
 //Let's keep code short so...
 //noinspection NameBooleanParameters
-class HashSafeTests extends FlatSpec {
+class HashSafeTests extends AnyFlatSpec {
   import net.glorat.dlcrypto.encode.HashSafeValidator._
 
   case class StringTuple(s1:String, s2:String)

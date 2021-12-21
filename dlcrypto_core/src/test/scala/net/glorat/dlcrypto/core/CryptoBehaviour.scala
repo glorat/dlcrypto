@@ -1,10 +1,10 @@
 package net.glorat.dlcrypto.core
 
+import org.scalatest.flatspec.AnyFlatSpec
+
 import java.security.KeyPair
 
-import org.scalatest.FlatSpec
-
-abstract class CryptoBehaviour(implicit val chosenSerializer:CryptoSerializer) extends FlatSpec
+abstract class CryptoBehaviour(implicit val chosenSerializer:CryptoSerializer) extends AnyFlatSpec
 {
   private case class MyDocument(msg:String)
 

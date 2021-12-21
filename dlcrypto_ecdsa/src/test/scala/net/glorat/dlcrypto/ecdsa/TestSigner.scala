@@ -1,16 +1,15 @@
 package net.glorat.dlcrypto.ecdsa
 
 import javax.crypto.Cipher
-
 import net.glorat.dlcrypto.core._
 import net.glorat.dlcrypto.encode.Proto2Serializer
 import org.bouncycastle.util.encoders.Hex
 import org.bouncycastle.util.test.FixedSecureRandom
-import org.scalatest._
+import org.scalatest.flatspec.AnyFlatSpec
 
 case class Document(message:String)
 
-class TestSigner extends FlatSpec with Logging {
+class TestSigner extends AnyFlatSpec with Logging {
   val signer = ECDSASigner
   implicit val encoder = Proto2Serializer
 

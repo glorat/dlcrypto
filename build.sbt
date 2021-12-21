@@ -2,13 +2,13 @@ name := "dlcrypto-root"
 
 organization := "net.glorat"
 
-lazy val scala212 = "2.12.8"
-lazy val scala211 = "2.11.12"
-lazy val supportedScalaVersions = List(scala212, scala211)
+lazy val scala213 = "2.13.7"
+lazy val scala212 = "2.12.15"
+lazy val supportedScalaVersions = List(scala213, scala212)
 
 ThisBuild / organization := "net.glorat"
-ThisBuild / version      := "0.2.1"
-ThisBuild / scalaVersion := scala212
+ThisBuild / version      := "0.2.3"
+ThisBuild / scalaVersion := scala213
 
 resolvers += Classpaths.typesafeReleases
 

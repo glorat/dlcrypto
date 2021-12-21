@@ -4,7 +4,7 @@ libraryDependencies ++= Seq(
   "com.typesafe.scala-logging" %% "scala-logging" % "3.9.2",
   "org.bouncycastle" % "bcprov-jdk15on" % "1.53",
   "joda-time" % "joda-time" % "2.2",
-  "org.scalatest" %% "scalatest" % "3.0.4" % "test",
+  "org.scalatest" %% "scalatest" % "3.2.10" % "test",
   "ch.qos.logback" % "logback-classic" % "1.2.3",
   "com.softwaremill.macwire" %% "macros" % "2.5.0" % "provided",
   "com.softwaremill.macwire" %% "util" % "2.5.0",
