@@ -1,10 +1,14 @@
 name := "dlcrypto-root"
 
-version := "0.2.0"
-
 organization := "net.glorat"
 
-scalaVersion in GlobalScope := "2.12.12"
+lazy val scala212 = "2.12.8"
+lazy val scala211 = "2.11.12"
+lazy val supportedScalaVersions = List(scala212, scala211)
+
+ThisBuild / organization := "net.glorat"
+ThisBuild / version      := "0.2.0"
+ThisBuild / scalaVersion := scala212
 
 resolvers += Classpaths.typesafeReleases
 
@@ -13,28 +17,10 @@ resolvers += "Sonatype OSS Snapshots" at "https://oss.sonatype.org/content/repos
 updateOptions := updateOptions.value.withCachedResolution(true)
 
 lazy val commonSettings = Seq(
-  organization := "net.glorat",
-  version := "0.2.0",
-  scalaVersion := "2.12.12",
   publishMavenStyle := true,
   pomIncludeRepository := { _ => false },
   licenses := Seq("GNU LESSER GENERAL PUBLIC LICENSE" -> url("https://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt")),
-  homepage := Some (url("https://github.com/glorat/dlcrypto")),
-  scmInfo := Some (
-    ScmInfo(
-      url("https://github.com/glorat/dlcrypto"),
-      "scm:git@github.com:glorat/dlcrypto.git"
-    )
-  ),
-  developers := List (
-    Developer(
-      id = "glorat",
-      name = "Kevin Tam",
-      email = "kevin@glorat.net",
-      url = url("https://github.com/glorat")
-    )
-  )
-
+  crossScalaVersions := supportedScalaVersions
 )
 
 lazy val dlcrypto_core = project.settings(commonSettings, fork  := true)
@@ -48,3 +34,34 @@ lazy val dlcrypto_mock = project.settings(commonSettings).dependsOn(dlcrypto_cor
 lazy val root = (project in file("."))
   .aggregate(dlcrypto_core, dlcrypto_ecdsa, dlcrypto_encode, dlcrypto_mock)
   .settings(commonSettings ++ Seq(packagedArtifacts := Map.empty))
+
+    .settings(
+      crossScalaVersions := Nil,
+      publish / skip := true
+    )
+
+ThisBuild / homepage := Some (url("https://github.com/glorat/dlcrypto"))
+
+ThisBuild / scmInfo := Some (
+  ScmInfo(
+    url("https://github.com/glorat/dlcrypto"),
+    "scm:git@github.com:glorat/dlcrypto.git"
+  )
+)
+
+ThisBuild / developers := List (
+  Developer(
+    id = "glorat",
+    name = "Kevin Tam",
+    email = "kevin@glorat.net",
+    url = url("https://github.com/glorat")
+  )
+)
+
+publishTo in ThisBuild := sonatypePublishTo.value
+
+// Useful to uncomment for snapshots or bad publishes
+publishConfiguration in ThisBuild := publishConfiguration.value.withOverwrite(true)
+publishLocalConfiguration in ThisBuild := publishLocalConfiguration.value.withOverwrite(true)
+
+>>>>>>> github/master

@@ -1,4 +1,4 @@
-dlcrypto
+dlcrypto [![Build Status][travis-image]][travis-url]
 ========
 
 A collection of Scala libraries and classes that wrap cryptographic functions as used in
@@ -30,3 +30,5 @@ developing against Java 8. Build system is based on sbt
 ```
 Copyright 2018 Kevin Tam
 ```
+[travis-image]: https://travis-ci.org/glorat/dlcrypto.svg?branch=master
+[travis-url]: https://travis-ci.org/glorat/dlcrypto
