@@ -1,8 +1,9 @@
 package net.glorat.dlcrypto.encode
 
+import scalapb.GeneratedMessage
+
 import java.time.LocalDate
 
-import com.trueaccord.scalapb.GeneratedMessage
 
 /**
   * Created by kevin on 21/4/2018.

@@ -6,6 +6,7 @@ option (scalapb.options) = {
   import: "net.glorat.dlcrypto.encode._"
   package_name: "net.glorat.dlcrypto.encode.example"
   flat_package: true
+  preserve_unknown_fields: false
 };
 
 message StringTupleProto {

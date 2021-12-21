@@ -3,10 +3,9 @@ package net.glorat.dlcrypto
 import java.nio.ByteBuffer
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
-
 import com.google.protobuf.ByteString
-import com.trueaccord.scalapb.TypeMapper
 import net.glorat.dlcrypto.core.{Address, Hash}
+import scalapb.TypeMapper
 
 package object encode {
   private val btohash :(ByteString=>Hash) = x => Hash(x.toByteArray)
