@@ -10,9 +10,9 @@ libraryDependencies ++= Seq(
   "com.softwaremill.macwire" %% "util" % "2.5.0",
   "com.thesamet.scalapb" %% "scalapb-runtime" % scalapb.compiler.Version.scalapbVersion % "protobuf",
   // For ScalaPB 0.11.x (json4s 0.3.x):
-  "com.thesamet.scalapb" %% "scalapb-json4s" % "0.11.1"
+  "com.thesamet.scalapb" %% "scalapb-json4s" % "0.12.0"
 )
-PB.targets in Compile := Seq(
-  scalapb.gen() -> (sourceManaged in Compile).value
+Compile/PB.targets := Seq(
+  scalapb.gen() -> (Compile / sourceManaged).value
 )
 // retrieveManaged := true
