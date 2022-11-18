@@ -12,3 +12,4 @@ lib_managed/
 .cache-main
 .cache-tests
 .DS_Store
+.bsp/
