@@ -20,7 +20,8 @@ lazy val commonSettings = Seq(
   publishMavenStyle := true,
   pomIncludeRepository := { _ => false },
   licenses := Seq("GNU LESSER GENERAL PUBLIC LICENSE" -> url("https://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt")),
-  crossScalaVersions := supportedScalaVersions
+  crossScalaVersions := supportedScalaVersions,
+  PB.protocVersion := "3.21.7"
 )
 
 lazy val dlcrypto_core = project.settings(commonSettings, fork  := true)
@@ -58,8 +59,8 @@ ThisBuild / developers := List (
   )
 )
 
-publishTo in ThisBuild := sonatypePublishTo.value
+ThisBuild / publishTo := sonatypePublishTo.value
 
 // Useful to uncomment for snapshots or bad publishes
-publishConfiguration in ThisBuild := publishConfiguration.value.withOverwrite(true)
-publishLocalConfiguration in ThisBuild := publishLocalConfiguration.value.withOverwrite(true)
+ThisBuild / publishConfiguration := publishConfiguration.value.withOverwrite(true)
+ThisBuild / publishLocalConfiguration := publishLocalConfiguration.value.withOverwrite(true)
